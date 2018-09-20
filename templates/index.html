@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Mars Wiki</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  
+</head>
+
+<body>
+  <div class="container">
+
+    <div class="jumbotron text-center">
+      <h1>Mars Wiki</h1>
+      <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Data!</a></p>
+    </div>
+
+    <!-- Mars Listings -->
+    <div class="row" id="mars-listings">
+      <div class="col-md-12">
+        <h3><b><u>Latest Mars News</u></b></h3>
+      </div>
+    </div>
+
+    <div class="row" id="mars-listings">
+      <div class="col-md-6">
+        <h4><b>{{listings.news_headlines[0]["news_title"]}}</b></h4>
+        <p>{{listings.news_headlines[0]["news_paragraph"]}}</p>
+      </div>
+      <div class="col-md-6">
+        <h4><b>{{listings.news_headlines[1]["news_title"]}}</b></h4>
+        <p>{{listings.news_headlines[1]["news_paragraph"]}}</p>
+      </div>
+    </div>
+
+    <div class="row" id="mars-listings">
+      <div class="col-md-6">
+        <h3><b><u>Featured Mars Image</u></b></h3>
+      </div>
+    </div>
+
+    <div class="row" id="mars-listings">
+      <div class="col-md-6">
+        <img alt = "Featured Mars Image" width = "550px" src = "{{listings.featured_image_url}}" >
+      </div>
+      <div class="col-md-6">
+          <div class="row" id="mars-listings">
+              <div class="col-md-12">
+               <h4><b><u>Current weather on Mars</u></b></h4>
+               <p>{{listings.mars_weather}}</p>
+               </div>
+         </div>
+         <div class="row" id="mars-listings">
+              <div class="col-md-12">
+                  <h4><b><u>Mars Facts</u></b></h4>
+                  {{listings.mars_facts|safe}}
+               </div>
+          </div>
+      </div>
+    </div>
+    
+    
+    
+    <div class="row" id="mars-listings">
+      <div class="col-md-12">
+        <h3 align="center"><u><b>Mars Hemispheres</b></u></h3>
+      </div>
+    </div>
+
+    <div class="row" id="mars-listings">
+      <div class="col-md-6">
+        <img alt = "Valles Marineris Hemisphere" width = "550px" src = "{{listings.hemisphere_image_urls[0]["img_url"]}}">
+      </div>
+      <div class="col-md-6">
+        <img alt = "Cerberus Hemisphere" width = "550px" src = "{{listings.hemisphere_image_urls[1]["img_url"]}}">
+      </div>
+    </div>
+
+    <div class="row" id="mars-listings">
+      <div class="col-md-6">
+        <h4 align="center"><b>Valles Marineris Hemisphere Enhanced</b></h4>
+      </div>
+      <div class="col-md-6">
+        <h4 align="center"><b>Cerberus Hemisphere Enhanced</b></h4>
+      </div>
+    </div>
+    
+    <div class="row" id="mars-listings">
+      <div class="col-md-6">
+        <img alt = "Schiaparelli Hemisphere" width = "550px" src = "{{listings.hemisphere_image_urls[2]["img_url"]}}">
+      </div>
+      <div class="col-md-6">
+        <img alt = "Syrtis Major Hemisphere" width = "550px" src = "{{listings.hemisphere_image_urls[3]["img_url"]}}">
+      </div>
+    </div>
+
+    <div class="row" id="mars-listings">
+      <div class="col-md-6">
+        <h4 align="center"><b>Schiaparelli Hemisphere Enhanced</b></h4>
+      </div>
+      <div class="col-md-6">
+        <h4 align="center"><b>Syrtis Major Hemisphere Enhanced</b></h4>
+      </div>
+    </div>
+    
+  </div>
+</body>
+
+</html>
+
