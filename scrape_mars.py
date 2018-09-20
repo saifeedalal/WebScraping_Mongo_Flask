@@ -3,7 +3,6 @@ from bs4 import BeautifulSoup
 import pandas as pd
 
 def init_browser():
-    # @NOTE: Replace the path with your actual path to the chromedriver
     executable_path = {"executable_path": "chromedriver"}
     return Browser("chrome", **executable_path, headless=False)
 
@@ -13,7 +12,7 @@ def scrape():
 
     ###############################################################################################################
 
-    #Scraping Mars news title and description from https://mars.nasa.gov/news/?    page=0&per_page=40&order=publish_date+desc%2Ccreated_at+desc&search=&category=19%2C165%2C184%2C204&blank_scope=Latest
+    #Scraping Mars news title and description from https://mars.nasa.gov/news/?page=0&per_page=40&order=publish_date+desc%2Ccreated_at+desc&search=&category=19%2C165%2C184%2C204&blank_scope=Latest
 
     url = "https://mars.nasa.gov/news/?page=0&per_page=40&order=publish_date+desc%2Ccreated_at+desc&search=&category=19%2C165%2C184%2C204&blank_scope=Latest"
     browser.visit(url)
@@ -21,21 +20,18 @@ def scrape():
     html = browser.html
     soup = BeautifulSoup(html, "html.parser")
 
-    # Examine the results, then determine element that contains sought info
-    #print(soup.prettify())
-
     # results are returned as an iterable list
 
     news_listings = []
     results = soup.find_all('li', class_="slide") 
 
-    # Loop through returned results
+    # Loop through returned results  which contains list of news items
     for result in results:
         # Error handling
         try:
-            # Identify and return title of listing
+            # Identify and return news title
             news_title = result.find('div', class_="image_and_description_container").find('div', class_="list_text").find('div', class_="content_title").find("a").text
-            # Identify and return price of listing
+            # Identify and return news paragraph
             news_paragraph = result.find('div', class_="image_and_description_container").find('div', class_="list_text").find('div', class_="article_teaser_body").text
 
             # Print results only if title, price, and link are available
@@ -46,6 +42,8 @@ def scrape():
                 news_listings.append({"news_title":news_title , "news_paragraph":news_paragraph})
         except AttributeError as e:
             print(e)
+
+#  code block to get the featured image of Mars
 
     url = "https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars"
     browser.visit(url)
@@ -59,6 +57,8 @@ def scrape():
     featured_image_url += soup.find('div', class_="carousel_container").find('div', class_="carousel_items").find('article', class_="carousel_item").find('div', class_="default floating_text_area ms-layer").find('footer').find('a', class_="button fancybox")['data-fancybox-href']
     print(featured_image_url)
 
+#code block to get the latest Mars weather info
+
     url = "https://twitter.com/marswxreport?lang=en"
     browser.visit(url)
 
@@ -69,6 +69,8 @@ def scrape():
 
     print(mars_weather)
 
+# code block to get Mars facts
+
     url = "https://space-facts.com/mars/"
 
     tables = pd.read_html(url)
@@ -77,6 +79,8 @@ def scrape():
     mars_facts_df = tables[0]
     mars_facts_df.columns = ['Parameter','Value']
     mars_facts_df.head(10)
+
+# code block to get enhanced images of Mars hemispheres
 
     url = "https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars"
     browser.visit(url)
@@ -141,6 +145,7 @@ def scrape():
 
     ###############################################################################################################
 
+    # Consolidating all the scrapped information into a dictionary and returning to the calling client
     listings["news_headlines"] = news_listings
     listings["featured_image_url"] = featured_image_url
     listings["mars_facts"] = mars_facts_df.to_html(bold_rows = True, index = False)
